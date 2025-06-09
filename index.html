@@ -703,30 +703,24 @@
     // Show loader
     loader.style.display = "block";
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage/chat_id=${chatId}`, {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: "Markdown"
-      })
-    })
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage` +
+            `?chat_id=${encodeURIComponent(chatId)}` +
+            `&text=${encodeURIComponent(message)}` +
+            `&parse_mode=Markdown`;
+
+    fetch(url)
             .then(res => res.json())
             .then(data => {
-              loader.style.display = "none";
-
               if (data.ok) {
+                popup.style.display = "flex";
                 form.reset();
-                popup.style.display = "flex"; // Show popup
               } else {
-                alert("Telegram-ға жіберу мүмкін болмады 😢");
+                alert("Telegram-ға жіберу мүмкін болмады:\n" + data.description);
               }
             })
-            .catch(error => {
-              loader.style.display = "none";
-              alert("Қате орын алды. Кейінірек қайталап көріңіз.");
-              console.error("Telegram Error:", error);
+            .catch(err => {
+              alert("Серверлік қате, кейінірек қайталап көріңіз");
+              console.error(err);
             });
   });
 
