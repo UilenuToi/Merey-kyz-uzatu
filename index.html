@@ -616,6 +616,7 @@
     music.addEventListener('ended', () => { playIcon.textContent = '▶'; isPlaying = false; });
   });
 </script>
+
 <script>
   const botToken = "8192950680:AAEGRsjyrXcg0h3VJhZYZgL9TRJiwlJVPxw";
   const chatId = "-1002677119475";
@@ -634,7 +635,7 @@
     // Show loader
     loader.style.display = "block";
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage/chat_id=${chatId}`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
