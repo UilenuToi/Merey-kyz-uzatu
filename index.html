@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мерейдің қыз ұзатуы</title>
+  <!-- Playfair Display (основной), Caveat (каллиграфия) -->
+  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+</head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    body {
+      background: #fff;
+      color: #111;
+      margin:0; padding:0;
+    }
+
+
+    /* Основные заголовки и подчеркнутый текст */
+    h1, .outlined-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+
+      line-height: 1.4;
+      color: #742820;
+      margin: 0.5em 0;    }
+
+    /* Кнопки, подписи, UI */
+    /*button, .radio-group label, .mini-calendar-header, .info-text {*/
+    /*  font-family: 'Rubik', sans-serif;*/
+    /*}*/
+
+    /* Имена молодожёнов */
+    .names {
+      font-family: 'Great Vibes', cursive;
+    }
+
+    /* Динамический гость и приглашение */
+    #guest-name, .invitation-text {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Второстепенные акценты */
+    .names-lobster {
+      font-family: 'Lobster', cursive;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Playfair Display', serif;
+      background: #fff;
+      font-size: 33px;
+      color: #742820;
+      cursor: pointer;
+      min-height: 100%;
+    }
+    body {
+      background-image: url("Kuz-uzatu-3.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      /* масштаб по высоте окна, чтобы не растягивалась ширина непропорционально */
+      background-size: auto 80%;
+      /* фиксируем за движением страницы */
+      background-attachment: fixed;
+    }
+
+    /* Обложка */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero img.bg-photo {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 1;
+      filter: brightness(0.98);
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: linear-gradient(
+              to bottom,
+              rgba(255,255,255,0.33) 8%,
+              rgba(255,255,255,0.97) 88%
+      );
+      z-index: 2;
+    }
+    .music-button {
+      position: absolute;
+      bottom: 62px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72px; height: 72px;
+      background: rgba(255,255,255,0.93);
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 33px;
+      color: #742820;
+      cursor: pointer;
+      z-index: 10; border: none;
+    }
+    .music-button:hover { background: #efe1fa; }
+
+    /* Основная часть */
+    .main-bg {
+      position: relative;
+      /* центральный фон */
+      background-image: url('image.jpg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      /* фиксируем фон относительно окна */
+      background-attachment: fixed;
+      /*
+        если нужно, чтобы фон не перекрывал геро-блок,
+        можно указать padding-top равный высоте геро
+      */
+      padding-top: 56px;
+    }
+    .content-section {
+      position: relative;
+      z-index: 2;
+      /*background: url('Kuz-Uzatu-2.JPG') bottom center/contain no-repeat;*/
+      background-position: calc(50%) calc(100% - 10px);
+      max-width: 650px;
+      margin: 0 auto;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      padding: 62px 32px 62px 32px;
+      margin-bottom: 56px;
+      text-align: center;
+      display: flex;
+      /*background: ;*/
+      flex-direction: column;
+      gap: 36px;
+    }
+
+
+    /* Общие стили для левого и правого орнаментов */
+    .content-section::before,
+    .content-section::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80px;            /* ширина орнамента */
+      height: 160px;          /* высота орнамента */
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      opacity: 0.3;           /* чтобы не мешать тексту */
+      z-index: 1;             /* позади самой карточки */
+    }
+
+    /* Левый орнамент */
+    .content-section::before {
+      left: -40px;            /* наполовину заступает за границу карточки */
+      /*background-image: url('ornament_left_colored.png');*/
+    }
+    /* Caveat акцент */
+    .caveat {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400 !important;
+      color: #742820; !important;
+      letter-spacing: 0.5px;
+    }
+    .caveat.host     { font-size: 1.5em; margin-top: 7px; }
+    .caveat.date     { font-size: 1.4em; margin: 8px 0 4px 0; }
+    .caveat.place    { font-size: 1.2em; }
+    .caveat.section-title { font-size: 1.15em; margin: 18px 0 7px 0; }
+
+    .noto-italic {
+      font-family: 'Playfair Display', serif;
+      font-style: italic !important;
+      font-weight: 300 !important;
+      color: #742820; !important;
+      font-size: 0.8em;      /* адаптируй размер под нужный блок */
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      display: block;
+      opacity: 0.97;
+      margin: 8px 0 14px 0;
+    }
+    .noto-italic.place {
+      font-size: 2.0em;
+      letter-spacing: 0.06em;
+      margin: 0 0 8px 0;
+    }
+    .noto-italic.date {
+      font-size: 0.8em;
+      margin: 10px 0 18px 0;
+    }
+    .noto-italic.thin {
+      font-size: 1.25em;
+      opacity: 0.93;
+      margin: 6px 0 6px 0;
+    }
+    .noto-italic.section-title {
+      font-size: 2.0em; /* можно подправить под нужный размер */
+      margin: 18px 0 7px 0;
+    }
+
+    .hero-title {
+        font-family: 'Caveat', 'cursive';
+
+      position: absolute;
+      top: 630px;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      padding: 0;
+      font-size: 30px;
+      color: #742820;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      white-space: nowrap;   /* запрет переноса */
+      z-index: 3;
+    }
+
+
+    /* Мини-календарь */
+    .mini-calendar-container {
+      max-width: 340px;
+      margin: 0 auto 18px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mini-calendar-header {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #742820;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .mini-calendar {
+      font-size: 20px;
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      background: transparent;
+    }
+    .mini-calendar th,
+    .mini-calendar td {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      color: #742820;
+      padding: 3px 8px;
+      text-align: center;
+      border: none;
+      font-size: 1em;
+      background: transparent;
+      position: relative;
+      line-height: 1.05;
+    }
+    .mini-calendar .marked-day {
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+    .mini-calendar .marked-day::after {
+      content: "♡";
+      font-family: 'Playfair Display', serif;
+      font-size: 2em;
+      color: #742820;
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Outlined-text — для второстепенных блоков */
+    .outlined-text {
+      /*font-family: 'Playfair Display', serif !important;*/
+      /*font-weight: 700 !important;*/
+      /*color: #b49a89 !important;*/
+      /*-webkit-text-stroke: 0.6px #998678 !important;*/
+      /*text-stroke: 0.6px #998678 !important;*/
+      /*letter-spacing: 0.2px;*/
+    }
+    .outlined-text.section { font-size: 26px !important; }
+    .outlined-text.title   { font-size: 34px !important; }
+    .outlined-text.address { font-size: 25px !important; }
+    .outlined-text.schedule{ font-size: 19px !important; }
+    .outlined-text.date, .outlined-text.time { font-size: 28px !important; }
+    .outlined-text.small  { font-size: 25px !important; }
+
+    @media (max-width: 700px) {
+      .hero-title {
+        top: 60vh;
+        font-size: 60px;
+      }
+      body{
+        background-size: auto 60%;
+
+      }
+      .content-section { max-width: 99vw; padding: 9vw 2vw 8vw 2vw; margin-bottom: 0; }
+      .outlined-text.title   { font-size: 34px !important; }
+      .outlined-text.section { font-size: 27px !important; }
+      .outlined-text.address { font-size: 25px !important; }
+      .outlined-text.schedule{ font-size: 22px !important; }
+      .outlined-text.date { font-size: 21px !important; }
+      .mini-calendar-header { font-size: 16px; }
+      .mini-calendar        { font-size: 16px; }
+    }
+    /* Кнопки и формы — стиль как на втором скрине */
+    .rsvp-form {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 4px 18px rgba(115, 62, 49, 0.05);
+      max-width: 510px;
+      margin: 24px auto;
+      padding: 24px 16px;        /* tightened up */
+      display: flex;
+      flex-direction: column;
+      gap: 16px;                 /* a touch less vertical gap */
+      align-items: stretch;
+    }
+
+    .rsvp-form input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;        /* more balanced padding */
+      font-size: 0.7em;            /* matches body copy */
+      border-radius: 20px;
+      border: 2px solid #c6beb9; /* slightly thinner border */
+      outline: none;
+      font-family: 'Playfair Display', serif;
+      color: #432017;
+      background: #fff;
+      box-sizing: border-box;
+      transition: border-color 0.22s;
+      margin-bottom: 0;
+    }
+
+    .rsvp-form input[type="text"]:focus {
+      color: #742820;
+      background: #fcf9f8;
+    }
+    .radio-group .divider {
+      border: none;              /* выключаем стандартные рамки */
+      border-top: 1px solid #fff; /* делаем тонкую белую линию */
+      margin: 8px 0;             /* отступы сверху/снизу */
+    }
+
+
+    .info-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.6em;         /* a bit smaller so it doesn’t compete */
+      color: #742820;
+      text-align: center;
+      margin: 6px 0 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .radio-group {
+      margin: 0 0 12px;
+    }
+
+    .radio-group label {
+      font-size: 0.6em;             /* match the rest of the form text */
+      font-family: 'Montserrat', sans-serif;
+      color: #742820;
+      cursor: pointer;
+    }
+
+    .radio-group div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    hr {
+      color: white;
+    }
+    .radio-group input[type="radio"] {
+      accent-color: #742820;
+      width: 18px;                /* slightly smaller circles */
+      height: 18px;
+      margin-right: 8px;          /* tighten up the gap */
+    }
+
+
+    .rsvp-form button[type="submit"] {
+      background-color: #a9897b;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.4em;          /* more in-line with other headings */
+      border: none;
+      border-radius: 22px;
+      padding: 12px 0;           /* a little less vertical height */
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 10px rgba(115, 62, 49, 0.09);
+      transition: background 0.18s;
+      width: 100%;
+    }
+
+    .rsvp-form button[type="submit"]:hover {
+      background: #7d5b4b;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .hero-title {
+        top: 64vh;
+        /*margin-left: -8px;*/
+        text-align: center;
+        font-size:55px;
+      }
+      .rsvp-form {
+        padding: 20px 12px;
+        gap: 12px;
+      }
+      .rsvp-form input[type="text"] {
+        padding: 12px 14px;
+        font-size: 0.95em;
+      }
+      .radio-group label {
+        font-size: 0.6em;
+      }
+      .rsvp-form button[type="submit"] {
+        font-size: 1.2em;
+        padding: 10px 0;
+      }
+
+      .radio-group .divider {
+        border: none;              /* выключаем стандартные рамки */
+        border-top: 1px solid #fff; /* делаем тонкую белую линию */
+        margin: 8px 0;             /* отступы сверху/снизу */
+      }
+
+
+    }
+
+  </style>
+<!-- 1. Обложка -->
+
+<body style="font-family: 'Noto Sans', sans-serif; margin:0; padding:0;">
+<div class="hero">
+  <h1 class="hero-title">Merey Qyz Uzatu</h1>
+  <img src="Kuz-Uzatu-1.JPG" alt="Мерей" class="bg-photo" />
+  <div class="hero-overlay"></div>
+  <button class="music-button" id="playBtn" title="Музыка">
+    <span id="playIcon">&#9654;</span>
+  </button>
+  <audio id="music" src="Kuz-Uzatu-music.mp3" preload="auto" loop></audio>
+</div>
+
+<div class="main-bg">
+  <div class="content-section">
+    <div class="outlined-text title">Құрметті</div>
+
+    <div class="outlined-text section" id="invitation-text">
+      ағайын-туыс, бауырлар,<br/>
+      құда-жекжат, нағашы-жиен, әріптестер,<br/>
+      доc-жарандар және көршілер!
+    </div>
+
+    <div class="outlined-text section">Сіздерді қызымыз</div>
+
+    <div class="noto-italic" style="font-size: 2.0em; margin: 0;">Мерейдің</div>
+
+    <div class="outlined-text section">ұзату тойының қадірлі қонағы болуға шақырамыз!</div>
+
+    <div class="outlined-text section" style="margin: 10px 0 5px 0;">Той иелері:</div>
+    <div class="noto-italic" style="font-size: 1.1em; margin: 0;">Қуаныш – Анжелика</div>
+
+
+
+    <div class="mini-calendar-container">
+      <div class="mini-calendar-header">Тамыз 2025</div>
+      <table class="mini-calendar">
+        <thead>
+        <tr>
+          <th>ДС</th><th>СС</th><th>СР</th><th>БС</th><th>ЖМ</th><th>СБ</th><th>ЖС</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td>
+        </tr>
+        <tr>
+          <td>4</td><td>5</td><td>6</td>
+          <td class="marked-day">7</td>
+          <td>8</td><td>9</td><td>10</td>
+        </tr>
+        <tr>
+          <td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td>
+        </tr>
+        <tr>
+          <td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
+        </tr>
+        <tr>
+          <td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="outlined-text schedule"
+         style="background:#f6f3fa;padding:20px;border-radius:14px;display:inline-block;margin-bottom:18px;">
+      Фуршет 18:00<br/>
+      Құдаларды қарсы алу 19:00
+    </div>
+
+    <div class="outlined-text section">Мекен-жайымыз:</div>
+    <div class="outlined-text address">
+      Ақтөбе қаласы,<br/>
+      Ағайынды Жұбановтар көшесі, 276/1<br/>
+      <span class="noto-italic place">“Qurmet Hall”</span> мейрамханасы
+    </div>
+
+    <div style="margin: 18px 0">
+      <a
+              href="https://go.2gis.com/RN5QW"
+              target="_blank"
+              style="text-decoration: none; color: #b29a90"
+      >
+        <img
+                src="https://play-lh.googleusercontent.com/55huczUZ05ruaVynURUNqzgTu0qXLF-SPQZKtE9KA6_BavI-g0NgXz1NR98n5xX33HwD"
+                alt="2GIS карта"
+                width="60"
+                style="vertical-align: middle; border-radius: 10px"
+        />
+        <span class="outlined-text address" style="vertical-align: middle"
+        >2GIS</span>
+      </a>
+    </div>
+
+    <div class="outlined-text section" style="margin:38px 0 18px">
+      ТОЙҒА КЕЛЕТІНІҢІЗДІ РАСТАУЫҢЫЗДЫ СҰРАЙМЫЗ
+    </div>
+
+    <form class="rsvp-form" id="rsvp-form">
+      <input type="text" id="name" placeholder="Есіміңіз" required />
+      <div class="info-text" style="text-align:left">
+        Жұбыңызбен келсеңіз, жұбыңыздың есімін де жазыңыз!
+      </div>
+      <div class="radio-group">
+        <div>
+          <label>
+            <input type="radio" name="answer" value="Келемін" required>
+            Келемін
+          </label>
+        </div>
+
+        <hr class="divider" />
+
+        <div>
+          <label>
+            <input type="radio" name="answer" value="Жұбыммен келемін">
+            Жұбыммен келемін
+          </label>
+        </div>
+
+        <hr class="divider" />
+
+        <div>
+          <label>
+            <input type="radio" name="answer" value="Келе алмаймын">
+            Келе алмаймын
+          </label>
+        </div>
+      </div>
+
+      <button type="submit">Жіберу</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Музыка на обложке
+  document.addEventListener('DOMContentLoaded', function () {
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const music = document.getElementById('music');
+    let isPlaying = false;
+    playBtn.addEventListener('click', () => {
+      if (!isPlaying) {
+        music.play().then(() => { playIcon.textContent = '❚❚'; isPlaying = true; });
+      } else {
+        music.pause(); playIcon.textContent = '▶'; isPlaying = false;
+      }
+    });
+    music.addEventListener('ended', () => { playIcon.textContent = '▶'; isPlaying = false; });
+  });
+</script>
+<script>
+  const botToken = "8192950680:AAEGRsjyrXcg0h3VJhZYZgL9TRJiwlJVPxw";
+  const chatId = "-4892073071";
+
+  const form = document.getElementById("rsvp-form");
+  const loader = document.getElementById("loader");
+  const popup = document.getElementById("popup");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const answer = document.querySelector('input[name="answer"]:checked').value;
+    const message = `📩 *Той RSVP*\n👤 Есім: ${name}\n✅ Жауап: ${answer}`;
+
+    // Show loader
+    loader.style.display = "block";
+
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: "Markdown"
+      })
+    })
+            .then(res => res.json())
+            .then(data => {
+              loader.style.display = "none";
+
+              if (data.ok) {
+                form.reset();
+                popup.style.display = "flex"; // Show popup
+              } else {
+                alert("Telegram-ға жіберу мүмкін болмады 😢");
+              }
+            })
+            .catch(error => {
+              loader.style.display = "none";
+              alert("Қате орын алды. Кейінірек қайталап көріңіз.");
+              console.error("Telegram Error:", error);
+            });
+  });
+
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
