@@ -588,18 +588,7 @@
     </form>
   </div>
 </div>
-<div id="loader" style="display:none; text-align:center; margin-top: 20px;">
-  <span style="font-size: 0.8em;">Жіберілуде...</span>
-</div>
 
-<div class="popup" id="popup">
-  <div class="popup-content">
-    ✅ Жауабыңыз сәтті жіберілді! Рақмет!
-    <br><br>
-    <button onclick="closePopup()">Жабу</button>
-  </div>
-</div>
-<script>
   // Музыка на обложке
   document.addEventListener('DOMContentLoaded', function () {
     const playBtn = document.getElementById('playBtn');
@@ -630,7 +619,7 @@
 
     const name = document.getElementById("name").value;
     const answer = document.querySelector('input[name="answer"]:checked').value;
-    const message = `📩 *Той RSVP*\n👤 Есім: ${name}\n✅ Жауап: ${answer}`;
+    const message = `📩 👤 Есім: ${name}\n✅ Жауап: ${answer}`;
 
     // Show loader
     loader.style.display = "block";
